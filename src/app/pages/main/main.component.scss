@@ -1,0 +1,97 @@
+:host {
+  height: 100%;
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.sidenav-container {
+  height: 100%;
+  width: 100%;
+}
+
+.toolbar {
+  padding: 24px;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.card-grid {
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  background-color: white;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+  padding: 16px;
+}
+
+.card-item {
+  position: relative;
+  cursor: move;
+}
+
+.remove-btn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+}
+
+.edit-btn {
+  margin-left: auto;
+}
+
+.edit-panel {
+  width: 250px;
+  padding: 16px;
+  box-shadow: none;
+  border-left: 1px solid #ccc;
+  background: #fff;
+}
+
+.available-list {
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.available-item {
+  padding: 8px;
+  border: 1px solid #999;
+  border-radius: 4px;
+  background-color: #fafafa;
+  cursor: move;
+  text-align: center;
+}
+
+.drag-preview-card {
+  min-width: 250px;
+  min-height: 300px;
+  pointer-events: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.placeholder {
+  visibility: hidden;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+  padding: 16px;
+  height: 100%;
+  box-sizing: border-box;
+  background-color: white;
+  transition: background-image 0.2s ease;
+}
+
+.card-grid.cdk-drop-list-dragging {
+  background-image: linear-gradient(#ccc 1px, transparent 1px),
+    linear-gradient(90deg, #ccc 1px, transparent 1px);
+  background-size: 40px 40px;
+}

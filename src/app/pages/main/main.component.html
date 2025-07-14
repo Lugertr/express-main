@@ -1,0 +1,87 @@
+<mat-sidenav-container class="sidenav-container" autosize>
+  <mat-sidenav
+    #sidenav
+    mode="side"
+    position="end"
+    class="edit-panel"
+    [fixedInViewport]="true"
+    fixedTopGap="0"
+  >
+    <h3>Available Items</h3>
+    <div
+      id="available-list"
+      cdkDropList
+      [cdkDropListData]="availableItems"
+      [cdkDropListConnectedTo]="tabs"
+      class="available-list"
+      (cdkDropListDropped)="drop($event)"
+    >
+      @for(item of availableItems; track item) {
+      <div class="available-item" cdkDrag [cdkDragData]="item">
+        {{ item }}
+
+        <!-- Превью при перетаскивании -->
+        <ng-template cdkDragPreview>
+          <mat-card class="drag-preview-card">
+            {{ item }}
+          </mat-card>
+        </ng-template>
+
+        <!-- Плейсхолдер, чтобы список не «прыгал» -->
+        <ng-template cdkDragPlaceholder>
+          <div class="available-item placeholder"></div>
+        </ng-template>
+      </div>
+      }
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <div class="toolbar">
+      <button mat-icon-button (click)="sidenav.toggle()" class="edit-btn">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <mat-tab-group mat-stretch-tabs="false" (selectedIndexChange)="onTabChange($event)">
+        @for(tab of tabs; track tab) {
+        <mat-tab [label]="tab">
+          <div
+            id="{{ tab }}"
+            cdkDropList
+            [cdkDropListData]="content[tab]"
+            [cdkDropListConnectedTo]="['available-list']"
+            class="card-grid"
+            (cdkDropListDropped)="drop($event)"
+          >
+            @if(content[tab].length === 0) {
+              <div class="placeholder">Перетащите сюда элемент</div>
+            } @else {
+              @for(item of content[tab]; track item) {
+              <mat-card class="card-item" cdkDrag [cdkDragData]="item">
+                <mat-card-title>{{ item }}</mat-card-title>
+                <button
+                  mat-icon-button
+                  class="remove-btn"
+                  (click)="removeFromTab(item)"
+                >
+                  <mat-icon>close</mat-icon>
+                </button>
+
+                <!-- (опционально) превью, если понадобится движение внутри вкладки -->
+                <ng-template cdkDragPreview>
+                  <mat-card class="drag-preview-card">
+                    {{ item }}
+                  </mat-card>
+                </ng-template>
+                <ng-template cdkDragPlaceholder>
+                  <mat-card class="card-item placeholder"></mat-card>
+                </ng-template>
+              </mat-card>
+              }
+            }
+          </div>
+        </mat-tab>
+        }
+      </mat-tab-group>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
